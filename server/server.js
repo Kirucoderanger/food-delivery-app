@@ -29,7 +29,7 @@ app.use("/api", require("./routes/foodRoutes"));
 //const connectDB = require("./config/db");
 
 //connectDB();
-const express = require("express");
+//const express = require("express");
 const cors = require("cors");
 
 
