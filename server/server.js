@@ -61,7 +61,10 @@ app.use(cors());
 app.use(express.json());
 app.use(
   cors({
-    origin: "https://food-delivery-app-nu-two.vercel.app/",
+    origin: [
+      "http://localhost:5173", // local development
+      "https://food-delivery-app-nu-two.vercel.app", // production frontend
+    ],
     credentials: true,
   })
 );
