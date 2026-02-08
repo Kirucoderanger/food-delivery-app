@@ -30,7 +30,7 @@ app.use("/api", require("./routes/foodRoutes"));
 
 //connectDB();
 //const express = require("express");
-const cors = require("cors");
+//const cors = require("cors");
 
 
 app.listen(5000, () =>
