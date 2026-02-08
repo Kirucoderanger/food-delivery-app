@@ -1,0 +1,22 @@
+
+gitignore file for the food delivery app project. This file specifies intentionally untracked files that Git should ignore.
+# Node modules
+node_modules/
+# Build output
+dist/
+build/
+# Environment variables
+.env
+# Logs
+logs/
+*.log
+# OS generated files
+.DS_Store
+Thumbs.db
+# IDE specific files
+.vscode/
+.idea/
+# Misc temporary files
+*.bak
+*.tmp
+
