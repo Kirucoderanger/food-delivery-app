@@ -46,7 +46,7 @@ export default api;
 
 import axios from "axios";
 
-const API_URL = "http://localhost:5000/api";
+//const API_URL = "http://localhost:5000/api";
 
 // Axios instance
 const api = axios.create({ baseURL: API_URL });
@@ -63,9 +63,11 @@ export const fetchFoodsByRestaurant = (restaurantId) =>
     headers: { Authorization: `Bearer ${token}` },
   };
 };*/
+const API_URL = import.meta.env.VITE_API_URL;
 
 const API = axios.create({
-  baseURL: "http://localhost:5000/api",
+  baseURL: API_URL,
+  
 });
 
 API.interceptors.request.use((req) => {

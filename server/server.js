@@ -59,6 +59,12 @@ const app = express();
 // Middleware
 app.use(cors());
 app.use(express.json());
+app.use(
+  cors({
+    origin: "https://food-delivery-app-nu-two.vercel.app/",
+    credentials: true,
+  })
+);
 
 // Routes
 app.use("/api/cart", cartRoutes);
