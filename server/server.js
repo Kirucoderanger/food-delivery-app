@@ -25,10 +25,10 @@ app.use("/api", require("./routes/orderRoutes"));
 app.use("/api", require("./routes/restaurantRoutes"));
 app.use("/api", require("./routes/foodRoutes"));
 
-require("dotenv").config();
-const connectDB = require("./config/db");
+//require("dotenv").config();
+//const connectDB = require("./config/db");
 
-connectDB();
+//connectDB();
 const express = require("express");
 const cors = require("cors");
 
