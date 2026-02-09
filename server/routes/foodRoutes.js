@@ -1,8 +1,9 @@
 
 
 
-const express = require("express");
-const Food = require("../models/Food");
+
+import express from "express";
+import Food from "../models/Food.js";
 
 const router = express.Router();
 
