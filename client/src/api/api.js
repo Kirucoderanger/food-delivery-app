@@ -103,13 +103,20 @@ export default API;
 
 
 import axios from "axios";
-
-const API_URL =
-  import.meta.env.VITE_API_URL || "http://localhost:5000/api";
-
-const API = axios.create({
-  baseURL: API_URL,
+const productionAPI = import.meta.env.VITE_API_URL;
+//const developmentAPI = "http://localhost:5000/api"
+//const API_URL = import.meta.env.VITE_API_URL || "http://localhost:5000/api";
+//Axios instance
+const API = axios.create({ 
+    baseURL: productionAPI,
 });
+
+// Restaurant APIs
+//export const fetchRestaurants = () => API.get("/restaurants");
+export const fetchRestaurants = () => API.get("/restaurants");
+
+export const fetchFoodsByRestaurant = (restaurantId) =>
+  API.get(`/restaurants/${restaurantId}/foods`);
 
 API.interceptors.request.use((req) => {
   const token = localStorage.getItem("token");
@@ -119,10 +126,7 @@ API.interceptors.request.use((req) => {
   return req;
 });
 
-// Restaurant APIs
-export const fetchRestaurants = () => API.get("/restaurants");
-export const fetchFoodsByRestaurant = (restaurantId) =>
-  API.get(`/restaurants/${restaurantId}/foods`);
+
 
 
 

@@ -1,7 +1,9 @@
-const express = require("express");
+import express from "express";
+import Restaurant from "../models/Restaurant.js";
+import Food from "../models/Food.js";
 const router = express.Router();
-const Restaurant = require("../models/Restaurant");
-const Food = require("../models/Food");
+
+
 
 // Get all restaurants
 router.get("/", async (req, res) => {
@@ -23,4 +25,4 @@ router.get("/:id/foods", async (req, res) => {
   }
 });
 
-module.exports = router;
+export default router;

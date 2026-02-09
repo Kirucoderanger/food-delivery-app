@@ -57,7 +57,7 @@ connectDB();
 const app = express();
 
 // Middleware
-app.use(cors());
+
 app.use(express.json());
 app.use(
   cors({
@@ -71,7 +71,7 @@ app.use(
 
 // Routes
 app.use("/api/cart", cartRoutes);
-app.use("/api/restaurants", restaurantRoutes);
+app.use("/api", restaurantRoutes);
 app.use("/api", userRoutes);
 app.use("/api", orderRoutes);
 app.use("/api", foodRoutes);
