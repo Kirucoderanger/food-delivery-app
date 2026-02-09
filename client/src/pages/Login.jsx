@@ -13,7 +13,7 @@ const Login = () => {
     try {
       await login(email, password);
       // After successful login, refresh window to update cart and user state
-      window.location.reload();
+      //window.location.reload();
       // redirect to home
       navigate("/"); // Redirect to home after login
       window.location.reload();
