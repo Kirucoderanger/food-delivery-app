@@ -104,11 +104,11 @@ export default API;
 
 import axios from "axios";
 const productionAPI = import.meta.env.VITE_API_URL;
-//const developmentAPI = "http://localhost:5000/api"
+const developmentAPI = "http://localhost:5000/api"
 //const API_URL = import.meta.env.VITE_API_URL || "http://localhost:5000/api";
 //Axios instance
 const API = axios.create({ 
-    baseURL: productionAPI,
+    baseURL: developmentAPI,
 });
 
 // Restaurant APIs
@@ -118,14 +118,14 @@ export const fetchRestaurants = () => API.get("/restaurants");
 export const fetchFoodsByRestaurant = (restaurantId) =>
   API.get(`/restaurants/${restaurantId}/foods`);
 
-API.interceptors.request.use((req) => {
+/*API.interceptors.request.use((req) => {
   const token = localStorage.getItem("token");
   if (token) {
     req.headers.Authorization = `Bearer ${token}`;
   }
   return req;
 });
-
+*/
 
 
 
