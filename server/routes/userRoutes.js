@@ -6,7 +6,7 @@ import User from "../models/User.js";
 
 const router = express.Router();
 
-router.post("/register", async (req, res) => {
+router.post("/auth/register", async (req, res) => {
   const hashed = await bcrypt.hash(req.body.password, 10);
 
   const user = await User.create({
@@ -17,7 +17,7 @@ router.post("/register", async (req, res) => {
   res.json(user);
 });
 
-router.post("/login", async (req, res) => {
+router.post("/auth/login", async (req, res) => {
   const user = await User.findOne({ email: req.body.email });
 
   const match = await bcrypt.compare(
