@@ -30,4 +30,4 @@ router.post("/login", async (req, res) => {
   res.json({ token });
 });
 
-module.exports = router;
+export default router;
