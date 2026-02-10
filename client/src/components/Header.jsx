@@ -198,7 +198,8 @@ import { Link, useNavigate } from "react-router-dom";
 import { HiOutlineMenu, HiOutlineX, HiOutlineShoppingCart } from "react-icons/hi";
 //import { useCart } from "../context/CartContext";
 import { useCart } from "../hooks/useCart";
-import { AuthContext } from "../context/AuthContext";
+//import { AuthContext } from "../context/AuthContext";
+import { AuthContext } from "../hooks/AuthContextHook";
 import { useAuth } from "../hooks/useAuth";
 
 const Header = () => {
