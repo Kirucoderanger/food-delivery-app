@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 import { useContext } from "react";
-import { CartContext } from "../context/CartContext";
+//import { CartContext } from "../context/CartContext";
+import { CartContext } from "../context/cart-context"
 
 export default function Navbar() {
   const { cart } = useContext(CartContext);

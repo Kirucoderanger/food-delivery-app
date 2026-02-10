@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { useParams, Link, useNavigate } from "react-router-dom";
 import { fetchFoodsByRestaurant } from "../api/api";
-import { useCart } from "../context/CartContext";
+//import { useCart } from "../context/CartContext";
+import { useCart } from "../hooks/useCart";
 import { useAuth } from "../hooks/useAuth";
 
 const Menu = () => {

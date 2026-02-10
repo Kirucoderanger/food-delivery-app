@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
 import { useParams, Link } from "react-router-dom";
 import { fetchFoodsByRestaurant } from "../api/api";
-import { useCart } from "../context/CartContext";
-
+//import { useCart } from "../context/CartContext";
+import { useCart } from "../hooks/useCart";
 const Menu = () => {
   const { id } = useParams();
   const [foods, setFoods] = useState([]);

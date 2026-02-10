@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
-import { useCart } from "../context/CartContext";
+//import { useCart } from "../context/CartContext";
+import { useCart } from "../hooks/useCart";
 import { useAuth } from "../hooks/useAuth";
 import { HiOutlineShoppingCart } from "react-icons/hi";
 

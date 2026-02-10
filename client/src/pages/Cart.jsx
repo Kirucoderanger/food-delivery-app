@@ -248,7 +248,8 @@ export default Cart;
 
 
 import React from "react";
-import { useCart } from "../context/CartContext";
+//import { useCart } from "../context/CartContext";
+import { useCart } from "../hooks/useCart";
 import { useNavigate } from "react-router-dom";
 import { HiOutlineTrash } from "react-icons/hi";
 

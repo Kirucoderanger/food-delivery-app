@@ -95,6 +95,7 @@ import { getCart, addCartItem, removeCartItem } from "../api/api";
 import { CartContext } from "./cart-context";
 
 
+
 //export const CartContext = createContext();
 
 export const CartProvider = ({ children }) => {
@@ -159,3 +160,5 @@ export const CartProvider = ({ children }) => {
   if (!context) throw new Error("useCart must be used within CartProvider");
   return context;
 };*/
+
+
