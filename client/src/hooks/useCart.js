@@ -1,7 +1,7 @@
 
 // useCart.js
 import { useContext } from "react";
-import { CartContext } from "./cart-context";
+import { CartContext } from "../context/cart-context";
 
 // Custom hook
 export const useCart = () => {
