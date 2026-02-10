@@ -27,7 +27,7 @@ export const AuthProvider = ({ children }) => {
 };
 */
 
-
+/*
 import { createContext, useState, useEffect } from "react";
 
 export const AuthContext = createContext();
@@ -59,6 +59,36 @@ export const AuthProvider = ({ children }) => {
     </AuthContext.Provider>
   );
 };
+*/
+
+
+import { useState } from "react";
+import { AuthContext } from "../hooks/AuthContextHook";
+
+//export const AuthContext = createContext();
+
+export const AuthProvider = ({ children }) => {
+  const [token, setToken] = useState(() => {
+    return localStorage.getItem("token");
+  });
+
+  const login = (newToken) => {
+    localStorage.setItem("token", newToken);
+    setToken(newToken);
+  };
+
+  const logout = () => {
+    localStorage.removeItem("token");
+    setToken(null);
+  };
+
+  return (
+    <AuthContext.Provider value={{ token, login, logout }}>
+      {children}
+    </AuthContext.Provider>
+  );
+};
+
 
 /*
 import { createContext, useContext, useEffect, useState } from "react";
