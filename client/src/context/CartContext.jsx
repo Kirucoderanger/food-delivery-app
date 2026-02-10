@@ -89,7 +89,7 @@ export const useCart = () => {
 */
 
 
-
+/*
 import { useState, useEffect } from "react";
 import { getCart, addCartItem, removeCartItem } from "../api/api";
 import { CartContext } from "./cart-context";
@@ -154,11 +154,74 @@ export const CartProvider = ({ children }) => {
   );
 };
 
+*/
+
 // Custom hook
 /*export const useCart = () => {
   const context = useContext(CartContext);
   if (!context) throw new Error("useCart must be used within CartProvider");
   return context;
 };*/
+
+
+
+// CartProvider.jsx
+import { useState, useEffect } from "react";
+import { getCart, addCartItem, removeCartItem } from "../api/api";
+import { CartContext } from "./cart-context";
+import { useAuth } from "../hooks/useAuth";
+
+export const CartProvider = ({ children }) => {
+  const [cartItems, setCartItems] = useState([]);
+  const { token, user } = useAuth(); // get token from auth
+
+  // Load cart function
+  const loadCart = async () => {
+    if (!token) {
+      setCartItems([]);
+      return;
+    }
+
+    try {
+      const res = await getCart(token);
+      setCartItems(res.data.items || []);
+    } catch (err) {
+      console.log("Cart load skipped", err);
+    }
+  };
+
+  // Auto-load cart when user logs in or token changes
+  useEffect(() => {
+    if (user && token) {
+      loadCart();
+    }
+  }, [user, token]);
+
+  // Add item
+  const addToCart = async (food) => {
+    try {
+      const res = await addCartItem(food, token);
+      setCartItems(res.data.items || []);
+    } catch (err) {
+      console.log("Add to cart failed", err);
+    }
+  };
+
+  // Remove item
+  const removeFromCart = async (foodId) => {
+    try {
+      const res = await removeCartItem(foodId, token);
+      setCartItems(res.data.items || []);
+    } catch (err) {
+      console.log("Remove from cart failed", err);
+    }
+  };
+
+  return (
+    <CartContext.Provider value={{ cartItems, addToCart, removeFromCart, loadCart }}>
+      {children}
+    </CartContext.Provider>
+  );
+};
 
 
