@@ -17,7 +17,7 @@ const Login = () => {
       //window.location.reload();
       // redirect to home
       navigate("/"); // Redirect to home after login
-      window.location.reload();
+      //window.location.reload();
     } catch (err) {
       alert("Login failed: " + err.response?.data?.message || err.message);
     }
