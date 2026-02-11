@@ -65,6 +65,7 @@ app.use(
       "http://localhost:5173", // local development
       "https://food-delivery-app-nu-two.vercel.app", // production frontend
       "https://food-delivery-39cu0gcfv-kirubel-lemus-projects.vercel.app", // production frontend
+      "https://food-delivery-app-qjid.onrender.com/", // production backend
     ],
     credentials: true,
   })
