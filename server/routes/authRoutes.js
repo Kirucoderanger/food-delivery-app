@@ -11,6 +11,9 @@ const generateToken = (id) => {
   });
 };
 
+console.log("SIGN SECRET:", process.env.JWT_SECRET);
+
+
 //
 // REGISTER
 //

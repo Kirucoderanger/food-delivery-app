@@ -103,12 +103,12 @@ export default API;
 
 
 import axios from "axios";
-const productionAPI = import.meta.env.VITE_API_URL;
-//const developmentAPI = "http://localhost:5000/api"
+//const productionAPI = import.meta.env.VITE_API_URL;
+const developmentAPI = "http://localhost:5000/api"
 //const API_URL = import.meta.env.VITE_API_URL || "http://localhost:5000/api";
 //Axios instance
 const API = axios.create({ 
-    baseURL: productionAPI,
+    baseURL: developmentAPI,
 });
 
 // Restaurant APIs
