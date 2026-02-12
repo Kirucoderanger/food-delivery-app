@@ -72,7 +72,7 @@ app.use(
 );
 
 // Routes
-app.use("/api", cartRoutes);
+app.use("/api/cart", cartRoutes);
 app.use("/api", restaurantRoutes);
 app.use("/api", userRoutes);
 app.use("/api", orderRoutes);
