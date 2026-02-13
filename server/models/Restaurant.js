@@ -2,7 +2,7 @@ import mongoose from "mongoose";
 
 const restaurantSchema = new mongoose.Schema({
   name: String,
-  image: String,
+  image: {type: String, required: false},
   description: String,
   deliveryTime: String
 });

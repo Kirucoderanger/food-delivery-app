@@ -14,6 +14,8 @@ export const useAuth = () => {
     setUser(userData);
     localStorage.setItem("user", JSON.stringify(userData));
     localStorage.setItem("token", userData.token);
+    const User = JSON.parse(localStorage.getItem("user"));
+    //const isAdmin = User.role === "admin";
 
     // ✅ Dispatch custom event so CartContext reloads
     window.dispatchEvent(new Event("userLoggedIn"));

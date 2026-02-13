@@ -50,6 +50,9 @@ import restaurantRoutes from "./routes/restaurantRoutes.js";
 import userRoutes from "./routes/userRoutes.js";
 import orderRoutes from "./routes/orderRoutes.js";
 import foodRoutes from "./routes/foodRoutes.js";
+import { uploadHandler } from "./uploadthing.js";
+
+
 
 dotenv.config();
 connectDB();
@@ -77,6 +80,7 @@ app.use("/api", restaurantRoutes);
 app.use("/api", userRoutes);
 app.use("/api", orderRoutes);
 app.use("/api", foodRoutes);
+app.use("/api/upload", uploadHandler);
 
 // Server
 const PORT = process.env.PORT || 5000;
