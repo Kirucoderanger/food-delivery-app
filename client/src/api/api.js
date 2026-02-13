@@ -100,7 +100,7 @@ API.interceptors.request.use((req) => {
 
 export default API;
 */
-
+/*
 
 import axios from "axios";
 const productionAPI = import.meta.env.VITE_API_URL;
@@ -136,5 +136,31 @@ export const addCartItem = (food) => API.post("/cart/add", { food });
 export const removeCartItem = (foodId) => API.post("/cart/remove", { foodId });
 export const registerUser = (data) => API.post("/auth/register", data);
 export const loginUser = (data) => API.post("/auth/login", data);
+
+export default API;
+*/
+
+
+import axios from "axios";
+
+const API = axios.create({
+  baseURL: import.meta.env.VITE_API_URL,
+});
+
+API.interceptors.request.use((req) => {
+  const token = localStorage.getItem("token");
+  if (token) {
+    req.headers.Authorization = `Bearer ${token}`;
+  }
+  return req;
+});
+
+export const loginUser = (data) => API.post("/auth/login", data);
+export const registerUser = (data) => API.post("/auth/register", data);
+
+export const getCart = () => API.get("/cart");
+export const addCartItem = (food) => API.post("/cart/add", { food });
+export const removeCartItem = (foodId) =>
+  API.post("/cart/remove", { foodId });
 
 export default API;
