@@ -61,7 +61,7 @@ export const AuthProvider = ({ children }) => {
 };
 */
 
-
+/*
 import { useState } from "react";
 import { AuthContext } from "../hooks/AuthContextHook";
 
@@ -88,6 +88,76 @@ export const AuthProvider = ({ children }) => {
     </AuthContext.Provider>
   );
 };
+*/
+
+
+import { createContext, useState, useEffect } from "react";
+import API from "../api/api";
+
+export const AuthContext = createContext();
+
+export const AuthProvider = ({ children }) => {
+  const [token, setToken] = useState(null);
+  const [user, setUser] = useState(null);
+
+  // Load from localStorage on app start
+  useEffect(() => {
+    const storedToken = localStorage.getItem("token");
+    const storedUser = localStorage.getItem("user");
+
+    if (storedToken) setToken(storedToken);
+    if (storedUser) setUser(JSON.parse(storedUser));
+  }, []);
+
+  const login = async (email, password) => {
+    const res = await API.post("/auth/login", { email, password });
+
+    const { token, user } = res.data;
+
+    localStorage.setItem("token", token);
+    localStorage.setItem("user", JSON.stringify(user));
+
+    setToken(token);
+    setUser(user);
+
+    return user;
+  };
+
+  const register = async (name, email, password) => {
+    const res = await API.post("/auth/register", {
+      name,
+      email,
+      password,
+    });
+
+    const { token, user } = res.data;
+
+    localStorage.setItem("token", token);
+    localStorage.setItem("user", JSON.stringify(user));
+
+    setToken(token);
+    setUser(user);
+
+    return user;
+  };
+
+  const logout = () => {
+    localStorage.removeItem("token");
+    localStorage.removeItem("user");
+
+    setToken(null);
+    setUser(null);
+  };
+
+  return (
+    <AuthContext.Provider value={{ token, user, login, register, logout }}>
+      {children}
+    </AuthContext.Provider>
+  );
+};
+
+
+
 
 
 /*
