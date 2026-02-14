@@ -97,31 +97,54 @@ import API from "../api/api";
 export const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
-  const [token, setToken] = useState(null);
-  const [user, setUser] = useState(null);
+  // ---------------------------
+  // SAFE INITIAL STATE
+  // ---------------------------
 
-  // Load from localStorage on app start
-  useEffect(() => {
-    const storedToken = localStorage.getItem("token");
+  const [token, setToken] = useState(() => {
+    return localStorage.getItem("token") || null;
+  });
+
+  const [user, setUser] = useState(() => {
     const storedUser = localStorage.getItem("user");
 
-    if (storedToken) setToken(storedToken);
-    if (storedUser) setUser(JSON.parse(storedUser));
-  }, []);
+    if (!storedUser || storedUser === "undefined") return null;
+
+    try {
+      return JSON.parse(storedUser);
+    } catch (err) {
+      console.log("Invalid user in localStorage. Clearing...");
+      localStorage.removeItem("user");
+      return null;
+    }
+  });
+
+  // ---------------------------
+  // LOGIN
+  // ---------------------------
 
   const login = async (email, password) => {
-    const res = await API.post("/auth/login", { email, password });
+    const res = await API.post("/auth/login", {
+      email,
+      password,
+    });
 
     const { token, user } = res.data;
 
+    // Save to storage
     localStorage.setItem("token", token);
     localStorage.setItem("user", JSON.stringify(user));
 
+    // Update state
     setToken(token);
     setUser(user);
 
     return user;
   };
+
+  // ---------------------------
+  // REGISTER
+  // ---------------------------
 
   const register = async (name, email, password) => {
     const res = await API.post("/auth/register", {
@@ -141,6 +164,10 @@ export const AuthProvider = ({ children }) => {
     return user;
   };
 
+  // ---------------------------
+  // LOGOUT
+  // ---------------------------
+
   const logout = () => {
     localStorage.removeItem("token");
     localStorage.removeItem("user");
@@ -149,12 +176,26 @@ export const AuthProvider = ({ children }) => {
     setUser(null);
   };
 
+  // ---------------------------
+  // CONTEXT VALUE
+  // ---------------------------
+
   return (
-    <AuthContext.Provider value={{ token, user, login, register, logout }}>
+    <AuthContext.Provider
+      value={{
+        token,
+        user,
+        login,
+        register,
+        logout,
+        isAuthenticated: !!token,
+      }}
+    >
       {children}
     </AuthContext.Provider>
   );
 };
+
 
 
 
