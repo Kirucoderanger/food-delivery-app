@@ -118,15 +118,36 @@ export const fetchRestaurants = () => API.get("/restaurants");
 export const fetchFoodsByRestaurant = (restaurantId) =>
   API.get(`/restaurants/${restaurantId}/foods`);
 
-API.interceptors.request.use((req) => {
+/*API.interceptors.request.use((req) => {
   const token = localStorage.getItem("token");
   if (token) {
-    req.headers.Authorization = `Bearer ${token}`;
+    //req.headers.Authorization = `Bearer ${token}`;
+    //j.setRequestHeader('Authorization', `Bearer ${token}`);
+    req.setRequestHeader('Authorization', `Bearer ${token}`);
   }
   return req;
+});*/
+
+API.interceptors.request.use((config) => {
+  const token = localStorage.getItem("token");
+  if (token) {
+    config.setRequestHeader('Authorization', `Bearer ${token}`);
+  }
+  return config;
 });
 
-
+// make sure to handle errors in the interceptor as well
+API.interceptors.response.use(
+  (response) => response,
+  (error) => {
+    if (error.response && error.response.status === 401) {
+      // Handle unauthorized errors (e.g., token expired)
+      localStorage.removeItem("token");
+      window.location.href = "/login"; // Redirect to login page
+    }
+    return Promise.reject(error);
+  }
+);
 
 
 
