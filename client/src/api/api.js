@@ -129,15 +129,18 @@ export const fetchFoodsByRestaurant = (restaurantId) =>
 });*/
 
 API.interceptors.request.use((config) => {
-  const token = localStorage.getItem("token");
-  if (token) {
-    config.headers.Authorization = `Bearer ${token}`;
+  const user = JSON.parse(localStorage.getItem("user"));
+  if (user && user.token) {
+    config.headers.Authorization = `Bearer ${user.token}`;
   }
   return config;
+}, (error) => {
+  return Promise.reject(error);
 });
 
 
 
+/*
 // make sure to handle errors in the interceptor as well
 API.interceptors.response.use(
   (response) => response,
@@ -150,7 +153,7 @@ API.interceptors.response.use(
     return Promise.reject(error);
   }
 );
-
+*/
 
 
 // Cart APIs
