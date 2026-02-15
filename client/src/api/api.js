@@ -127,17 +127,38 @@ export const fetchFoodsByRestaurant = (restaurantId) =>
   }
   return req;
 });*/
-
+/*
 API.interceptors.request.use((config) => {
   const user = JSON.parse(localStorage.getItem("user"));
   if (user && user.token) {
-    config.headers.Authorization = `Bearer ${user}`;
+    config.headers.Authorization = `Bearer ${user.token}`;
   }
   return config;
 }, (error) => {
   return Promise.reject(error);
 });
+*/
+/*
+API.interceptors.request.use(
+  (config) => {
+    const user = JSON.parse(localStorage.getItem("user"));
+    if (user && user.token) {
+      config.headers.Authorization = `Bearer ${user.token}`;
+    }
+    return config;
+  },
+  (error) => Promise.reject(error)
+);
+*/
+API.interceptors.request.use((config) => {
+  const token = localStorage.getItem("token");
 
+  if (token) {
+    config.headers.Authorization = `Bearer ${token}`;
+  }
+
+  return config;
+});
 
 
 /*
