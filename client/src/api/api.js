@@ -131,10 +131,12 @@ export const fetchFoodsByRestaurant = (restaurantId) =>
 API.interceptors.request.use((config) => {
   const token = localStorage.getItem("token");
   if (token) {
-    config.setRequestHeader('Authorization', `Bearer ${token}`);
+    config.headers.Authorization = `Bearer ${token}`;
   }
   return config;
 });
+
+
 
 // make sure to handle errors in the interceptor as well
 API.interceptors.response.use(
