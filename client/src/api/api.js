@@ -131,7 +131,7 @@ export const fetchFoodsByRestaurant = (restaurantId) =>
 API.interceptors.request.use((config) => {
   const user = JSON.parse(localStorage.getItem("user"));
   if (user && user.token) {
-    config.headers.Authorization = `Bearer ${user.token}`;
+    config.headers.Authorization = `Bearer ${user}`;
   }
   return config;
 }, (error) => {
