@@ -164,8 +164,8 @@ export const CartProvider = ({ children }) => {
 };
 */
 
-
 /*
+
 // CartProvider.jsx
 import { useState, useEffect } from "react";
 import { getCart, addCartItem, removeCartItem } from "../api/api";
@@ -174,7 +174,7 @@ import { useAuth } from "../hooks/useAuth";
 
 export const CartProvider = ({ children }) => {
   const [cartItems, setCartItems] = useState([]);
-  const { token, user } = useAuth(); // get token from auth
+  const { token, user } = useAuth(); // get token and user from auth
 
   // Load cart function
   const loadCart = async () => {
@@ -195,11 +195,26 @@ export const CartProvider = ({ children }) => {
   useEffect(() => {
     if (user && token) {
       loadCart();
+
+      
     }
   }, [user, token]);
 
+    useEffect(() => {
+    const handleLogin = async () => await loadCart();
+    const handleLogout = () => setCartItems([]);
+    
+    window.addEventListener("userLoggedIn", handleLogin);
+    window.addEventListener("userLoggedOut", handleLogout);
+    return () => {
+      window.removeEventListener("userLoggedIn", handleLogin);
+      window.removeEventListener("userLoggedOut", handleLogout);
+    };
+  }, []);
 
-   
+ 
+
+    
   
 
   // Add item
@@ -224,6 +239,95 @@ export const CartProvider = ({ children }) => {
 
   return (
     <CartContext.Provider value={{ cartItems, addToCart, removeFromCart, loadCart }}>
+      {children}
+    </CartContext.Provider>
+  );
+};
+*/
+
+//import { createContext } from "react";
+
+//export const CartContext = createContext();
+
+/********* Previous version *********/
+/*import { createContext, useState } from "react";
+
+export const CartContext = createContext();
+
+export const CartProvider = ({ children }) => {
+  const [cartItems, setCartItems] = useState([]);
+    // Add item to cart
+    const addToCart = (food) => {
+        setCartItems((prev) => {
+            const existing = prev.find((item) => item._id === food._id);
+            if (existing) {
+                return prev.map((item) =>
+                    item._id === food._id ? { ...item, quantity: item.quantity + 1 } : item
+                );
+            } else {
+                return [...prev, { ...food, quantity: 1 }];
+            } 
+        });
+    };
+
+    // Remove item from cart
+    const removeFromCart = (id) => {
+        setCartItems((prev) => prev.filter((item) => item._id !== id));
+    };
+
+    // Update quantity
+    const updateQuantity = (id, quantity) => {
+        setCartItems((prev) =>
+            prev.map((item) => (item._id === id ? { ...item, quantity } : item))
+        );
+    };
+
+    return (
+        <CartContext.Provider value={{ cartItems, addToCart, removeFromCart, updateQuantity }}>
+            {children}
+        </CartContext.Provider>
+    );
+};
+*/
+/*
+
+import { createContext, useState } from "react";
+import { useAuth } from "../hooks/useAuth";
+
+export const CartContext = createContext();
+
+export const CartProvider = ({ children }) => {
+  const [cartItems, setCartItems] = useState([]);
+  const { token } = useAuth(); // get token from auth
+
+  // Add item to cart
+  const addToCart = (food) => {
+    setCartItems((prev) => {
+      const existing = prev.find((item) => item._id === food._id);
+      if (existing) {
+        return prev.map((item) =>
+          item._id === food._id ? { ...item, quantity: item.quantity + 1 } : item
+        );
+      } else {
+        return [...prev, { ...food, quantity: 1 }];
+      }
+    });
+  };
+
+  // Remove item from cart
+  const removeFromCart = (id) => {
+    setCartItems((prev) => prev.filter((item) => item._id !== id));
+  };
+
+  // Update quantity
+  const updateQuantity = (id, quantity) => {
+    setCartItems((prev) =>
+      prev.map((item) => (item._id === id ? { ...item, quantity } : item))
+    );
+  };
+
+  return (
+    <CartContext.Provider value={{ cartItems, addToCart, removeFromCart, updateQuantity }}>
       {children}
     </CartContext.Provider>
   );

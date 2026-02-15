@@ -100,7 +100,7 @@ API.interceptors.request.use((req) => {
 
 export default API;
 */
-/*
+
 
 import axios from "axios";
 const productionAPI = import.meta.env.VITE_API_URL;
@@ -138,9 +138,9 @@ export const registerUser = (data) => API.post("/auth/register", data);
 export const loginUser = (data) => API.post("/auth/login", data);
 
 export default API;
-*/
 
 
+/*
 import axios from "axios";
 
 const API = axios.create({
@@ -170,3 +170,4 @@ export const removeCartItem = (foodId) =>
   API.post("/cart/remove", { foodId });
 
 export default API;
+*/

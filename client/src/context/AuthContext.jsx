@@ -6,6 +6,9 @@ export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
 
   const login = (userData, token) => {
+    // Save to localStorage
+
+    localStorage.setItem("user", JSON.stringify(userData));
     localStorage.setItem("token", token);
     setUser(userData);
 
@@ -27,7 +30,9 @@ export const AuthProvider = ({ children }) => {
 };
 */
 
+
 /*
+
 import { createContext, useState, useEffect } from "react";
 
 export const AuthContext = createContext();
@@ -66,6 +71,7 @@ import { useState } from "react";
 import { AuthContext } from "../hooks/AuthContextHook";
 
 //export const AuthContext = createContext();
+export { AuthContext };
 
 export const AuthProvider = ({ children }) => {
   const [token, setToken] = useState(() => {
@@ -91,10 +97,13 @@ export const AuthProvider = ({ children }) => {
 */
 
 
-import { createContext, useState, useEffect } from "react";
-import API from "../api/api";
 
-export const AuthContext = createContext();
+import {  useState  } from "react";
+import API from "../api/api";
+import { AuthContext } from "../hooks/AuthContextHook";
+
+//export const AuthContext = createContext();
+export { AuthContext };
 
 export const AuthProvider = ({ children }) => {
   // ---------------------------
@@ -113,7 +122,7 @@ export const AuthProvider = ({ children }) => {
     try {
       return JSON.parse(storedUser);
     } catch (err) {
-      console.log("Invalid user in localStorage. Clearing...");
+      console.log("Invalid user in localStorage. Clearing...", err);
       localStorage.removeItem("user");
       return null;
     }
@@ -197,7 +206,34 @@ export const AuthProvider = ({ children }) => {
 };
 
 
+/*
+import { useState } from "react";
+import { AuthContext } from "../hooks/AuthContextHook";
 
+//export const AuthContext = createContext();
+
+export const AuthProvider = ({ children }) => {
+  const [token, setToken] = useState(() => {
+    return localStorage.getItem("token");
+  });
+
+  const login = (newToken) => {
+    localStorage.setItem("token", newToken);
+    setToken(newToken);
+  };
+
+  const logout = () => {
+    localStorage.removeItem("token");
+    setToken(null);
+  };
+
+  return (
+    <AuthContext.Provider value={{ token, login, logout }}>
+      {children}
+    </AuthContext.Provider>
+  );
+};
+*/
 
 
 
@@ -318,5 +354,40 @@ export const AuthProvider = ({ children }) => {
 
 // Hook for easy usage
 export const useAuth = () => useContext(AuthContext);
+
 */
 
+/*
+import { createContext, useContext, useState, useEffect } from "react";
+
+export const AuthContext = createContext();
+
+export const AuthProvider = ({ children }) => {
+  const [token, setToken] = useState(() => {
+    return localStorage.getItem("token");
+  });
+
+  const login = (newToken) => {
+    localStorage.setItem("token", newToken);
+    setToken(newToken);
+  };
+
+  const logout = () => {
+    localStorage.removeItem("token");
+    setToken(null);
+  };
+
+  return (
+    <AuthContext.Provider value={{ token, login, logout }}>
+      {children}
+    </AuthContext.Provider>
+  );
+};
+
+export const useAuth = () => {
+  const context = useContext(AuthContext);
+  if (!context) throw new Error("useAuth must be used within AuthProvider");
+  return context;
+};
+
+*/
