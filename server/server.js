@@ -112,8 +112,8 @@ connectDB();
 
 const app = express();
 
-//app.use(express.json());
-
+app.use(express.json());
+/*
 app.use(
   cors({
     origin: [
@@ -124,6 +124,8 @@ app.use(
     credentials: true,
   })
 );
+*/
+app.use(cors()); // This sets Access-Control-Allow-Origin: *
 
 // Routes
 app.use("/api", authRoutes);
