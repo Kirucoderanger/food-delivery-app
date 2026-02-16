@@ -94,7 +94,7 @@ app.listen(PORT, () => {
 
 
 import express from "express";
-import cors from "cors";
+//import cors from "cors";
 import dotenv from "dotenv";
 
 import connectDB from "./config/db.js";
@@ -137,11 +137,31 @@ app.use(
 //app.use(cors()); // This sets Access-Control-Allow-Origin: *
 
 
+/*
+app.use(cors({
+  origin: "https://food-delivery-app-nu-two.vercel.app",
+  credentials: true,
+}));
 
 app.use(cors({
   origin: "https://food-delivery-app-nu-two.vercel.app",
   credentials: true,
 }));
+
+*/
+
+import cors from "cors";
+
+const allowedOrigins = ["https://food-delivery-app-nu-two.vercel.app"];
+
+app.use(
+  cors({
+    origin: allowedOrigins,
+    credentials: true, // allow cookies & Authorization header
+  })
+);
+
+
 
 // Routes
 app.use("/api", authRoutes);
