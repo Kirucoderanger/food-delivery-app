@@ -110,11 +110,12 @@ export const CartProvider = ({ children }) => {
     }
 
     try {
-      const res = await getCart();
+      const res = await getCart(); // ✅ token is sent via interceptor
       setCartItems(res.data.items || []);
-    } catch {
-      console.log("Cart load skipped");
+    } catch (err) {
+      console.log("Cart load failed:", err.response?.data || err.message);
     }
+
   };
 
   // Load cart on app start

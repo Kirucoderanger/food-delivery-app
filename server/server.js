@@ -107,6 +107,12 @@ import foodRoutes from "./routes/foodRoutes.js";
 import authRoutes from "./routes/authRoutes.js";
 import { uploadHandler } from "./uploadthing.js";
 
+// check JWT_SECRET
+if (!process.env.JWT_SECRET || process.env.JWT_SECRET.length < 32) {
+  console.error("FATAL: JWT_SECRET is missing or too short");
+  process.exit(1);
+}
+
 dotenv.config();
 connectDB();
 
