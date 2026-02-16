@@ -125,7 +125,14 @@ app.use(
   })
 );
 */
-app.use(cors()); // This sets Access-Control-Allow-Origin: *
+//app.use(cors()); // This sets Access-Control-Allow-Origin: *
+
+
+
+app.use(cors({
+  origin: "https://food-delivery-app-nu-two.vercel.app",
+  credentials: true,
+}));
 
 // Routes
 app.use("/api", authRoutes);
