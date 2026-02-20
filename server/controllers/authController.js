@@ -32,7 +32,7 @@ export const loginUser = async (req, res) => {
 
 
 import User from "../models/User.js";
-import asyncHandler from "../middleware/asyncHandler.js";
+//import asyncHandler from "../middleware/asyncHandler.js";
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 
@@ -84,7 +84,7 @@ export const registerUser = async (req, res) => {
 //
 // LOGIN
 //
-/*
+
 export const loginUser = async (req, res) => {
   try {
     const { email, password } = req.body;
@@ -109,8 +109,8 @@ export const loginUser = async (req, res) => {
     res.status(500).json({ message: "Server error" });
   }
 };
-*/
 
+/*
 export const loginUser = asyncHandler(async (req, res) => {
   const { email, password } = req.body;
 
@@ -131,3 +131,4 @@ export const loginUser = asyncHandler(async (req, res) => {
     },
   });
 });
+*/
