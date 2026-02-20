@@ -167,7 +167,7 @@ app.use(
 app.use("/api", authRoutes);
 app.use("/api/cart", cartRoutes);
 app.use("/api", restaurantRoutes);
-app.use("/api", userRoutes);
+//app.use("/api", userRoutes);
 app.use("/api", orderRoutes);
 app.use("/api", foodRoutes);
 app.use("/api/upload", uploadHandler);
