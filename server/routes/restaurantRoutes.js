@@ -122,7 +122,7 @@ import Food from "../models/Food.js";
 const router = express.Router();
 
 // Get all restaurants
-router.get("/", async (req, res) => {
+router.get("/restaurants", async (req, res) => {
   try {
     const restaurants = await Restaurant.find();
     res.json(restaurants);
