@@ -170,6 +170,7 @@ app.use("/api", restaurantRoutes);
 app.use("/api", userRoutes);
 app.use("/api", orderRoutes);
 app.use("/api", foodRoutes);
+app.use("/api/menu", restaurantRoutes);
 app.use("/api/upload", uploadHandler);
 
 const PORT = process.env.PORT || 5000;
