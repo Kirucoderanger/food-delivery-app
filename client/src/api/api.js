@@ -118,38 +118,7 @@ export const fetchRestaurants = () => API.get("/restaurants");
 export const fetchFoodsByRestaurant = (id) =>
   API.get(`/restaurants/${id}/foods`);
 
-/*API.interceptors.request.use((req) => {
-  const token = localStorage.getItem("token");
-  if (token) {
-    //req.headers.Authorization = `Bearer ${token}`;
-    //j.setRequestHeader('Authorization', `Bearer ${token}`);
-    req.setRequestHeader('Authorization', `Bearer ${token}`);
-  }
-  return req;
-});*/
-/*
-API.interceptors.request.use((config) => {
-  const user = JSON.parse(localStorage.getItem("user"));
-  if (user && user.token) {
-    config.headers.Authorization = `Bearer ${user.token}`;
-  }
-  return config;
-}, (error) => {
-  return Promise.reject(error);
-});
-*/
-/*
-API.interceptors.request.use(
-  (config) => {
-    const user = JSON.parse(localStorage.getItem("user"));
-    if (user && user.token) {
-      config.headers.Authorization = `Bearer ${user.token}`;
-    }
-    return config;
-  },
-  (error) => Promise.reject(error)
-);
-*/
+
 API.interceptors.request.use((config) => {
   const token = localStorage.getItem("token");
 
@@ -159,22 +128,6 @@ API.interceptors.request.use((config) => {
 
   return config;
 });
-
-
-/*
-// make sure to handle errors in the interceptor as well
-API.interceptors.response.use(
-  (response) => response,
-  (error) => {
-    if (error.response && error.response.status === 401) {
-      // Handle unauthorized errors (e.g., token expired)
-      localStorage.removeItem("token");
-      window.location.href = "/login"; // Redirect to login page
-    }
-    return Promise.reject(error);
-  }
-);
-*/
 
 
 // Cart APIs

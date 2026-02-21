@@ -94,7 +94,7 @@ app.listen(PORT, () => {
 
 
 import express from "express";
-//import cors from "cors";
+
 import dotenv from "dotenv";
 
 import connectDB from "./config/db.js";
@@ -122,33 +122,7 @@ connectDB();
 const app = express();
 
 app.use(express.json());
-/*
-app.use(
-  cors({
-    origin: [
-      "http://localhost:5173",
-      "https://food-delivery-app-nu-two.vercel.app",
-      "https://food-delivery-39cu0gcfv-kirubel-lemus-projects.vercel.app",
-    ],
-    credentials: true,
-  })
-);
-*/
-//app.use(cors()); // This sets Access-Control-Allow-Origin: *
 
-
-/*
-app.use(cors({
-  origin: "https://food-delivery-app-nu-two.vercel.app",
-  credentials: true,
-}));
-
-app.use(cors({
-  origin: "https://food-delivery-app-nu-two.vercel.app",
-  credentials: true,
-}));
-
-*/
 
 import cors from "cors";
 
@@ -170,7 +144,6 @@ app.use("/api", restaurantRoutes);
 app.use("/api", userRoutes);
 app.use("/api", orderRoutes);
 app.use("/api", foodRoutes);
-//app.use("/api/menu", restaurantRoutes);
 app.use("/api/upload", uploadHandler);
 
 const PORT = process.env.PORT || 5000;

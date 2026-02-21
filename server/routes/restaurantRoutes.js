@@ -132,7 +132,7 @@ router.get("/restaurants", async (req, res) => {
 });
 
 // Get all foods for a restaurant
-router.get("/:id/foods", async (req, res) => {
+router.get("/restaurants/:id/foods", async (req, res) => {
   try {
     const foods = await Food.find({ restaurant: req.params.id });
     res.json(foods);
