@@ -115,8 +115,8 @@ const API = axios.create({
 //export const fetchRestaurants = () => API.get("/restaurants");
 export const fetchRestaurants = () => API.get("/restaurants");
 
-export const fetchFoodsByRestaurant = (restaurantId) =>
-  API.get(`/restaurants/${restaurantId}/foods`);
+export const fetchFoodsByRestaurant = (id) =>
+  API.get(`/restaurants/${id}/foods`);
 
 /*API.interceptors.request.use((req) => {
   const token = localStorage.getItem("token");
