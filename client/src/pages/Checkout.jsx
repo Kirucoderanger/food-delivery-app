@@ -33,7 +33,8 @@ const Checkout = () => {
 
     try {
       const res = await axios.post(
-        "http://localhost:5000/api/orders",
+        //"http://localhost:5000/api/orders",
+        `${import.meta.env.VITE_API_URL}/orders`,
         {
           items: cartItems.map((item) => ({
             foodId: item._id || item.foodId,
