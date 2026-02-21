@@ -107,8 +107,8 @@ router.get("/restaurants", async (req, res) => {
   res.json(restaurants);
 });
 
-router.get("/restaurants/:id", async (req, res) => {
-  const restaurant = await Restaurant.findById(req.params.id);
+router.get("/restaurants/:restaurantId", async (req, res) => {
+  const restaurant = await Restaurant.findById(req.params.restaurantId);
   res.json(restaurant);
 });
 
