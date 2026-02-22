@@ -206,7 +206,7 @@ import {
 } from "../api/api";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../hooks/useAuth";
-import jwtDecode from "jwt-decode";
+import { jwtDecode } from "jwt-decode";
 
 const Home = () => {
   const [restaurants, setRestaurants] = useState([]);
