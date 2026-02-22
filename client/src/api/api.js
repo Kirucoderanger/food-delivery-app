@@ -120,10 +120,12 @@ export const fetchFoodsByRestaurant = (id) =>
 
 export const deleteRestaurant = (id) => API.delete(`/restaurants/${id}`);
 
-export const addRestaurant = (data) => API.post("/restaurants", data);
+export const createRestaurant = (data) => API.post("/restaurants", data);
 
 export const updateRestaurant = (id, data) =>
   API.put(`/restaurants/${id}`, data);
+
+
 
 
 API.interceptors.request.use((config) => {
