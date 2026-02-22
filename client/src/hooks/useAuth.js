@@ -23,8 +23,8 @@ export const useAuth = () => {
     return userData;
   };
 
-  const register = async (name, email, password) => {
-    const res = await axios.post("/auth/register", { name, email, password });
+  const register = async (name, email, password, role = "customer") => {
+    const res = await axios.post("/auth/register", { name, email, password, role });
     const userData = res.data;
     setUser(userData);
     localStorage.setItem("user", JSON.stringify(userData));

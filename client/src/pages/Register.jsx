@@ -6,12 +6,13 @@ const Register = () => {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [role, setRole] = useState("customer"); // default role
   const navigate = useNavigate();
 
   const handleRegister = async (e) => {
     e.preventDefault();
     try {
-      const res = await api.post("/auth/register", { name, email, password });
+      const res = await api.post("/auth/register", { name, email, password, role });
       localStorage.setItem("token", res.data.token);
       navigate("/"); // redirect to home after registration
     } catch (err) {
@@ -43,6 +44,19 @@ const Register = () => {
         onChange={(e) => setPassword(e.target.value)}
         className="border p-2 w-full mb-2"
       />
+{/*user roles for customer, user and admin*/}
+      <select
+        className="border p-2 w-full mb-4"
+        placeholder="Select Role"
+        value={role}
+        onChange={(e) => setRole(e.target.value)}
+      >
+        <option value="customer">Customer</option>
+        <option value="user">User/restaurant</option>
+        <option value="admin">Admin</option> 
+      </select>
+
+      
       <button
         type="submit"
         className="bg-green-500 text-white py-2 px-4 rounded hover:bg-green-600 transition"
