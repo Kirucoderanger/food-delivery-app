@@ -294,10 +294,7 @@ const Header = () => {
               </button >
 
               {userMenuOpen && (
-                <div className="absolute right-0 mt-2 w-40 bg-white border rounded-lg shadow"
-                  onMouseEnter={() => setUserMenuOpen(true)}
-                  onMouseLeave={() => setUserMenuOpen(false)}
-                >
+                <div className="absolute right-0 mt-2 w-40 bg-white border rounded-lg shadow">
                   <Link
                     to="/orders"
                     className="block px-4 py-2 hover:bg-gray-100"
