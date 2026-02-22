@@ -206,6 +206,7 @@ import {
 } from "../api/api";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../hooks/useAuth";
+import jwtDecode from "jwt-decode";
 
 const Home = () => {
   const [restaurants, setRestaurants] = useState([]);
@@ -221,7 +222,10 @@ const Home = () => {
 
   const navigate = useNavigate();
   const { user } = useAuth();
-  const isAdmin = user?.role === "admin";
+  //const isAdmin = user?.role === "admin";
+  const userRole = user ? jwtDecode(localStorage.getItem("token")).role : null;
+  const isAdmin = userRole === "admin";
+
 
   useEffect(() => {
     fetchRestaurants()
