@@ -118,6 +118,13 @@ export const fetchRestaurants = () => API.get("/restaurants");
 export const fetchFoodsByRestaurant = (id) =>
   API.get(`/restaurants/${id}/foods`);
 
+export const deleteRestaurant = (id) => API.delete(`/restaurants/${id}`);
+
+export const addRestaurant = (data) => API.post("/restaurants", data);
+
+export const updateRestaurant = (id, data) =>
+  API.put(`/restaurants/${id}`, data);
+
 
 API.interceptors.request.use((config) => {
   const token = localStorage.getItem("token");
