@@ -201,13 +201,14 @@ import { useCart } from "../hooks/useCart";
 //import { AuthContext } from "../context/AuthContext";
 import { AuthContext } from "../hooks/AuthContextHook";
 import { useAuth } from "../hooks/useAuth";
+import { jwtDecode } from "jwt-decode";
 
 const Header = () => {
   const { user, logout } = useAuth();
   const { cartItems } = useCart();
   const navigate = useNavigate();
-  const userDetails = user ? JSON.parse(localStorage.getItem("user")) : null;
-  const userName = userDetails ? userDetails.name : "Account";
+  const userName = user ? jwtDecode(localStorage.getItem("token")).name : null;
+
 
   const [mobileOpen, setMobileOpen] = useState(false);
   const [userMenuOpen, setUserMenuOpen] = useState(false);
@@ -287,7 +288,7 @@ const Header = () => {
                 
 
               >
-                {userName}
+                {userName || "Account"}
               </button >
 
               {userMenuOpen && (
