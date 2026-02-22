@@ -278,16 +278,20 @@ const Header = () => {
             <div className="relative">
               <button
                 onMouseEnter={() => setUserMenuOpen(true)}
+                onMouseLeave={() => setUserMenuOpen(false)}
                 
                 className="bg-gray-100 px-3 py-2 rounded-lg flex items-center gap-1 text-gray-600 hover:text-black"
                 
 
               >
                 {user.name || "Account"}
-              </button>
+              </button >
 
               {userMenuOpen && (
-                <div className="absolute right-0 mt-2 w-40 bg-white border rounded-lg shadow">
+                <div className="absolute right-0 mt-2 w-40 bg-white border rounded-lg shadow"
+                  onMouseEnter={() => setUserMenuOpen(true)}
+                  onMouseLeave={() => setUserMenuOpen(false)}
+                >
                   <Link
                     to="/orders"
                     className="block px-4 py-2 hover:bg-gray-100"
