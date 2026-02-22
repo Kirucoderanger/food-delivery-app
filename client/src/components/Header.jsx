@@ -278,12 +278,12 @@ const Header = () => {
             <div className="relative">
               <button
                 onMouseEnter={() => setUserMenuOpen(true)}
-                onMouseLeave={() => setUserMenuOpen(false)}
+                
                 className="bg-gray-100 px-3 py-2 rounded-lg flex items-center gap-1 text-gray-600 hover:text-black"
                 
 
               >
-                {user.name}
+                {user.name || "Account"}
               </button>
 
               {userMenuOpen && (
