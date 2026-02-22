@@ -277,10 +277,13 @@ const Header = () => {
           ) : (
             <div className="relative">
               <button
-                onClick={() => setUserMenuOpen(!userMenuOpen)}
-                className="bg-gray-100 px-3 py-2 rounded-lg"
+                onMouseEnter={() => setUserMenuOpen(true)}
+                onMouseLeave={() => setUserMenuOpen(false)}
+                className="bg-gray-100 px-3 py-2 rounded-lg flex items-center gap-1 text-gray-600 hover:text-black"
+                
+
               >
-                {user.name || "Account"}
+                {user.name}
               </button>
 
               {userMenuOpen && (
