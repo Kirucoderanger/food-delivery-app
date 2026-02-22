@@ -192,13 +192,11 @@ const Header = () => {
 export default Header;
 
 */
-
+/*
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { HiOutlineMenu, HiOutlineX, HiOutlineShoppingCart } from "react-icons/hi";
-//import { useCart } from "../context/CartContext";
 import { useCart } from "../hooks/useCart";
-//import { AuthContext } from "../context/AuthContext";
 import { AuthContext } from "../hooks/AuthContextHook";
 import { useAuth } from "../hooks/useAuth";
 import { jwtDecode } from "jwt-decode";
@@ -227,7 +225,7 @@ const Header = () => {
     <header className="bg-white border-b shadow-sm sticky top-0 z-50">
       <div className="max-w-7xl mx-auto px-4 h-16 flex items-center justify-between">
 
-        {/* Left */ }
+        {/* Left  }
         <div className="flex items-center gap-3">
           <button
             className="md:hidden"
@@ -241,7 +239,7 @@ const Header = () => {
           </Link>
         </div>
 
-        {/* Desktop Navigation */ }
+        {/* Desktop Navigation  }
         <nav className="hidden md:flex items-center gap-6 text-gray-600">
           <Link to="/" className="hover:text-orange-500">Home</Link>
           {user && (
@@ -251,10 +249,10 @@ const Header = () => {
           )}
         </nav>
 
-        {/* Right Section */ }
+        {/* Right Section  }
         <div className="flex items-center gap-4">
 
-          {/* Cart */ }
+          {/* Cart  }
           <Link to="/cart" className="relative">
             <HiOutlineShoppingCart size={24} />
             {totalItems > 0 && (
@@ -264,7 +262,7 @@ const Header = () => {
             )}
           </Link>
 
-          {/* Auth Section */ }
+          {/* Auth Section  }
           {!user ? (
             <div className="hidden md:flex gap-3">
               <Link to="/login" className="text-gray-600 hover:text-black">
@@ -284,8 +282,6 @@ const Header = () => {
               >
               <button
                 onClick={() => setUserMenuOpen(!userMenuOpen)}
-                
-                
                 className="bg-gray-100 px-3 py-2 rounded-lg flex items-center gap-1 text-gray-600 hover:text-black"
                 
 
@@ -314,7 +310,7 @@ const Header = () => {
         </div>
       </div>
 
-      {/* Mobile Menu */}
+      {/* Mobile Menu }
       {mobileOpen && (
         <div className="md:hidden bg-gray-50 border-t px-4 py-3 space-y-2">
           <Link to="/" className="block">Home</Link>
@@ -323,6 +319,220 @@ const Header = () => {
             <>
               <Link to="/login" className="block">Login</Link>
               <Link to="/register" className="block">Register</Link>
+            </>
+          )}
+        </div>
+      )}
+    </header>
+  );
+};
+
+export default Header;
+
+*/
+
+import { useState, useRef, useEffect } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import {
+  HiOutlineMenu,
+  HiOutlineX,
+  HiOutlineShoppingCart,
+} from "react-icons/hi";
+import { useCart } from "../hooks/useCart";
+import { useAuth } from "../hooks/useAuth";
+import { jwtDecode } from "jwt-decode";
+
+const Header = () => {
+  const { user, logout } = useAuth();
+  const { cartItems } = useCart();
+  const navigate = useNavigate();
+
+  const userName = user
+    ? jwtDecode(localStorage.getItem("token")).name
+    : null;
+
+  const [mobileOpen, setMobileOpen] = useState(false);
+  const [userMenuOpen, setUserMenuOpen] = useState(false);
+
+  const menuRef = useRef(null);
+  const buttonRef = useRef(null);
+  const firstItemRef = useRef(null);
+
+  const totalItems = cartItems.reduce(
+    (sum, item) => sum + item.quantity,
+    0
+  );
+
+  const handleLogout = () => {
+    logout();
+    setUserMenuOpen(false);
+    navigate("/login");
+  };
+
+  // Close dropdown on outside click
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (
+        menuRef.current &&
+        !menuRef.current.contains(event.target) &&
+        buttonRef.current &&
+        !buttonRef.current.contains(event.target)
+      ) {
+        setUserMenuOpen(false);
+      }
+    };
+
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, []);
+
+  // Focus first item when menu opens
+  useEffect(() => {
+    if (userMenuOpen && firstItemRef.current) {
+      firstItemRef.current.focus();
+    }
+  }, [userMenuOpen]);
+
+  return (
+    <header className="bg-white border-b shadow-sm sticky top-0 z-50">
+      <div className="max-w-7xl mx-auto px-4 h-16 flex items-center justify-between">
+        
+        {/* Left Section */}
+        <div className="flex items-center gap-3">
+          <button
+            className="md:hidden"
+            onClick={() => setMobileOpen((prev) => !prev)}
+            aria-label="Toggle Menu"
+          >
+            {mobileOpen ? (
+              <HiOutlineX size={24} />
+            ) : (
+              <HiOutlineMenu size={24} />
+            )}
+          </button>
+
+          <Link to="/" className="text-xl font-bold text-gray-800">
+            FoodDelivery
+          </Link>
+        </div>
+
+        {/* Desktop Navigation */}
+        <nav className="hidden md:flex items-center gap-6 text-gray-600">
+          <Link to="/" className="hover:text-orange-500">
+            Home
+          </Link>
+          {user && (
+            <Link to="/orders" className="hover:text-orange-500">
+              Orders
+            </Link>
+          )}
+        </nav>
+
+        {/* Right Section */}
+        <div className="flex items-center gap-4">
+
+          {/* Cart */}
+          <Link to="/cart" className="relative">
+            <HiOutlineShoppingCart size={24} />
+            {totalItems > 0 && (
+              <span className="absolute -top-2 -right-2 bg-orange-500 text-white text-xs px-2 rounded-full">
+                {totalItems}
+              </span>
+            )}
+          </Link>
+
+          {/* Auth Section */}
+          {!user ? (
+            <div className="hidden md:flex gap-3">
+              <Link
+                to="/login"
+                className="text-gray-600 hover:text-black"
+              >
+                Login
+              </Link>
+              <Link
+                to="/register"
+                className="bg-orange-500 text-white px-4 py-2 rounded-lg hover:bg-orange-600"
+              >
+                Sign Up
+              </Link>
+            </div>
+          ) : (
+            <div className="relative">
+              <button
+                ref={buttonRef}
+                aria-haspopup="true"
+                aria-expanded={userMenuOpen}
+                onClick={() => setUserMenuOpen((prev) => !prev)}
+                onKeyDown={(e) => {
+                  if (e.key === "ArrowDown") {
+                    e.preventDefault();
+                    setUserMenuOpen(true);
+                  }
+                }}
+                className="bg-gray-100 px-3 py-2 rounded-lg flex items-center gap-1 text-gray-600 hover:text-black focus:outline-none focus:ring-2 focus:ring-orange-500"
+              >
+                {userName || "Account"}
+              </button>
+
+              {userMenuOpen && (
+                <div
+                  ref={menuRef}
+                  role="menu"
+                  className="absolute right-0 mt-2 w-40 bg-white border rounded-lg shadow-md"
+                  onKeyDown={(e) => {
+                    if (e.key === "Escape") {
+                      setUserMenuOpen(false);
+                      buttonRef.current.focus();
+                    }
+                  }}
+                >
+                  <Link
+                    to="/orders"
+                    ref={firstItemRef}
+                    role="menuitem"
+                    tabIndex={0}
+                    className="block px-4 py-2 hover:bg-gray-100 focus:bg-gray-100 focus:outline-none"
+                    onClick={() => setUserMenuOpen(false)}
+                  >
+                    Orders
+                  </Link>
+
+                  <button
+                    role="menuitem"
+                    className="w-full text-left px-4 py-2 text-red-500 hover:bg-gray-100 focus:bg-gray-100 focus:outline-none"
+                    onClick={handleLogout}
+                  >
+                    Logout
+                  </button>
+                </div>
+              )}
+            </div>
+          )}
+        </div>
+      </div>
+
+      {/* Mobile Menu */}
+      {mobileOpen && (
+        <div className="md:hidden bg-gray-50 border-t px-4 py-3 space-y-2">
+          <Link to="/" className="block">
+            Home
+          </Link>
+          {user && (
+            <Link to="/orders" className="block">
+              Orders
+            </Link>
+          )}
+          {!user && (
+            <>
+              <Link to="/login" className="block">
+                Login
+              </Link>
+              <Link to="/register" className="block">
+                Register
+              </Link>
             </>
           )}
         </div>
