@@ -206,6 +206,8 @@ const Header = () => {
   const { user, logout } = useAuth();
   const { cartItems } = useCart();
   const navigate = useNavigate();
+  const userDetails = user ? JSON.parse(localStorage.getItem("user")) : null;
+  const userName = userDetails ? userDetails.name : "Account";
 
   const [mobileOpen, setMobileOpen] = useState(false);
   const [userMenuOpen, setUserMenuOpen] = useState(false);
@@ -277,6 +279,7 @@ const Header = () => {
           ) : (
             <div className="relative">
               <button
+                onClick={() => setUserMenuOpen(!userMenuOpen)}
                 onMouseEnter={() => setUserMenuOpen(true)}
                 onMouseLeave={() => setUserMenuOpen(false)}
                 
@@ -284,7 +287,7 @@ const Header = () => {
                 
 
               >
-                {user.name || "Account"}
+                {userName}
               </button >
 
               {userMenuOpen && (
