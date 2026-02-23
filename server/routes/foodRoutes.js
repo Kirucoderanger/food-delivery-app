@@ -23,6 +23,7 @@ router.post("/foods", async (req, res) => {
     name,
     price,
     image,
+    category: "Main Course", // Default category
     restaurant
   });
 
