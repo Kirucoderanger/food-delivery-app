@@ -125,9 +125,12 @@ export const createRestaurant = (data) => API.post("/restaurants", data);
 export const updateRestaurant = (id, data) =>
   API.put(`/restaurants/${id}`, data);
 
+// Food APIs
+export const createFood = (data) => API.post("/foods", data);
+export const updateFood = (id, data) => API.put(`/foods/${id}`, data);
+export const deleteFood = (id) => API.delete(`/foods/${id}`);
 
-
-
+// Auth header helper
 API.interceptors.request.use((config) => {
   const token = localStorage.getItem("token");
 
