@@ -18,7 +18,7 @@ router.get("/foods/:restaurantId", async (req, res) => {
 
 // Create new food item
 router.post("/foods", async (req, res) => {
-  const { name, price, image, restaurant } = req.body;
+  const { name, price, image, category, restaurant } = req.body;
   const food = await Food.create({
     name,
     price,
