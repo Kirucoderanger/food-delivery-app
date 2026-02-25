@@ -192,14 +192,12 @@ const Menu = () => {
               Category: {food.category}
             </p>
 
-            {!isAdmin && (
-              <button
-                onClick={() => handleAddToCart(food)}
-                className="mt-auto bg-blue-500 text-white py-2 rounded hover:bg-blue-600 transition"
-              >
-                Add to Cart
-              </button>
-            )}
+            <button
+            onClick={() => handleAddToCart(food)}
+            className="mt-auto bg-blue-500 text-white py-2 rounded hover:bg-blue-600 transition"
+            >
+              Add to Cart
+            </button>
 
             {isAdmin && (
               <div className="absolute top-2 right-2 flex gap-2 opacity-0 group-hover:opacity-100 transition">

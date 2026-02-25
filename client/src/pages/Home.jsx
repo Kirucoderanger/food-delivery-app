@@ -196,7 +196,7 @@ const Home = () => {
 export default Home;
 */
 
-
+/*
 import React, { useEffect, useState } from "react";
 import {
   fetchRestaurants,
@@ -207,6 +207,7 @@ import {
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../hooks/useAuth";
 import { jwtDecode } from "jwt-decode";
+//import ImageUploader from "../components/ImageUploader";
 
 const Home = () => {
   const [restaurants, setRestaurants] = useState([]);
@@ -300,7 +301,7 @@ const Home = () => {
   return (
     <div className="p-4">
 
-      {/* Admin Add Button */}
+      {/* Admin Add Button *}
       {isAdmin && (
         <div className="mb-6 flex justify-end">
           <button
@@ -312,7 +313,7 @@ const Home = () => {
         </div>
       )}
 
-      {/* Grid */}
+      {/* Grid *}
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
         {restaurants.map((r) => (
           <div
@@ -359,7 +360,7 @@ const Home = () => {
         ))}
       </div>
 
-      {/* ---------- MODAL ---------- */}
+      {/* ---------- MODAL ---------- *}
       {modalOpen && (
         <div className="fixed inset-0 bg-black bg-opacity-40 flex items-center justify-center z-50">
           <div className="bg-white w-full max-w-md p-6 rounded-lg shadow-lg">
@@ -429,6 +430,277 @@ const Home = () => {
                   className="bg-orange-500 text-white px-4 py-2 rounded hover:bg-orange-600"
                 >
                   {editingRestaurant ? "Update" : "Create"}
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      )}
+    </div>
+  );
+};
+
+export default Home;
+*/
+
+import React, { useEffect, useState } from "react";
+import {
+  fetchRestaurants,
+  deleteRestaurant,
+  createRestaurant,
+  updateRestaurant,
+} from "../api/api";
+import { useNavigate } from "react-router-dom";
+import { useAuth } from "../hooks/useAuth";
+import { jwtDecode } from "jwt-decode";
+import ImageUploader from "../components/ImageUploader";
+
+const Home = () => {
+  const [restaurants, setRestaurants] = useState([]);
+  const [modalOpen, setModalOpen] = useState(false);
+  const [editingRestaurant, setEditingRestaurant] = useState(null);
+
+  const [formData, setFormData] = useState({
+    name: "",
+    description: "",
+    image: "",
+    deliveryTime: "",
+  });
+
+  const navigate = useNavigate();
+  const { user } = useAuth();
+
+  const userRole = user
+    ? jwtDecode(localStorage.getItem("token")).role
+    : null;
+
+  const isAdmin = userRole === "admin";
+
+  /* ================= FETCH ================= */
+  useEffect(() => {
+    fetchRestaurants()
+      .then((res) => setRestaurants(res.data))
+      .catch(console.error);
+  }, []);
+
+  /* ================= DELETE ================= */
+  const handleDelete = async (id) => {
+    if (!window.confirm("Are you sure?")) return;
+
+    await deleteRestaurant(id);
+    setRestaurants((prev) =>
+      prev.filter((r) => r._id !== id)
+    );
+  };
+
+  /* ================= ADD ================= */
+  const openAddModal = () => {
+    setEditingRestaurant(null);
+    setFormData({
+      name: "",
+      description: "",
+      image: "",
+      deliveryTime: "",
+    });
+    setModalOpen(true);
+  };
+
+  /* ================= EDIT ================= */
+  const openEditModal = (restaurant, e) => {
+    e.stopPropagation();
+
+    setEditingRestaurant(restaurant);
+    setFormData({
+      name: restaurant.name,
+      description: restaurant.description,
+      image: restaurant.image,
+      deliveryTime: restaurant.deliveryTime,
+    });
+
+    setModalOpen(true);
+  };
+
+  /* ================= SUBMIT ================= */
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    if (!formData.image) {
+      alert("Please upload an image");
+      return;
+    }
+
+    if (editingRestaurant) {
+      const res = await updateRestaurant(
+        editingRestaurant._id,
+        formData
+      );
+
+      setRestaurants((prev) =>
+        prev.map((r) =>
+          r._id === editingRestaurant._id
+            ? res.data
+            : r
+        )
+      );
+    } else {
+      const res = await createRestaurant(formData);
+      setRestaurants((prev) => [...prev, res.data]);
+    }
+
+    setModalOpen(false);
+  };
+
+  return (
+    <div className="p-4">
+      {isAdmin && (
+        <div className="mb-6 flex justify-end">
+          <button
+            onClick={openAddModal}
+            className="bg-orange-500 text-white px-5 py-2 rounded-lg"
+          >
+            + Add Restaurant
+          </button>
+        </div>
+      )}
+
+      {/* GRID */}
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+        {restaurants.map((r) => (
+          <div
+            key={r._id}
+            className="relative border rounded shadow group"
+          >
+            <div
+              className="p-4 cursor-pointer"
+              onClick={() =>
+                navigate(`/menu/${r._id}`)
+              }
+            >
+              <img
+                src={r.image}
+                alt={r.name}
+                className="w-full h-48 object-cover rounded"
+              />
+
+              <h2 className="text-xl font-bold mt-2">
+                {r.name}
+              </h2>
+
+              <p>{r.description}</p>
+
+              <p className="text-sm text-gray-500">
+                Delivery: {r.deliveryTime}
+              </p>
+            </div>
+
+            {isAdmin && (
+              <div className="absolute top-2 right-2 flex gap-2 opacity-0 group-hover:opacity-100">
+                <button
+                  onClick={(e) =>
+                    openEditModal(r, e)
+                  }
+                  className="bg-blue-500 text-white px-2 py-1 text-xs rounded"
+                >
+                  Edit
+                </button>
+
+                <button
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    handleDelete(r._id);
+                  }}
+                  className="bg-red-500 text-white px-2 py-1 text-xs rounded"
+                >
+                  Delete
+                </button>
+              </div>
+            )}
+          </div>
+        ))}
+      </div>
+
+      {/* ================= MODAL ================= */}
+      {modalOpen && (
+        <div className="fixed inset-0 bg-black/40 flex justify-center items-center">
+          <div className="bg-white p-6 rounded w-full max-w-md">
+            <h2 className="text-xl font-bold mb-4">
+              {editingRestaurant
+                ? "Edit Restaurant"
+                : "Add Restaurant"}
+            </h2>
+
+            <form
+              onSubmit={handleSubmit}
+              className="space-y-3"
+            >
+              <input
+                placeholder="Name"
+                className="w-full border p-2 rounded"
+                value={formData.name}
+                onChange={(e) =>
+                  setFormData({
+                    ...formData,
+                    name: e.target.value,
+                  })
+                }
+                required
+              />
+
+              <input
+                placeholder="Description"
+                className="w-full border p-2 rounded"
+                value={formData.description}
+                onChange={(e) =>
+                  setFormData({
+                    ...formData,
+                    description:
+                      e.target.value,
+                  })
+                }
+                required
+              />
+
+              {/* ✅ Upload inside modal */}
+              <ImageUploader
+                existingImage={formData.image}
+                onUploadComplete={(url) =>
+                  setFormData({
+                    ...formData,
+                    image: url,
+                  })
+                }
+              />
+
+              <input
+                placeholder="Delivery Time"
+                className="w-full border p-2 rounded"
+                value={formData.deliveryTime}
+                onChange={(e) =>
+                  setFormData({
+                    ...formData,
+                    deliveryTime:
+                      e.target.value,
+                  })
+                }
+                required
+              />
+
+              <div className="flex justify-end gap-3">
+                <button
+                  type="button"
+                  onClick={() =>
+                    setModalOpen(false)
+                  }
+                  className="border px-4 py-2 rounded"
+                >
+                  Cancel
+                </button>
+
+                <button
+                  type="submit"
+                  className="bg-orange-500 text-white px-4 py-2 rounded"
+                >
+                  Save
                 </button>
               </div>
             </form>

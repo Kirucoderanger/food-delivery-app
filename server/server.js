@@ -146,6 +146,11 @@ app.use("/api", orderRoutes);
 app.use("/api", foodRoutes);
 app.use("/api/upload", uploadHandler);
 
+// uplodthing route
+import { uploadthingHandler } from "./uploadthing.js";
+
+app.use("/api/uploadthing", uploadthingHandler);
+
 const PORT = process.env.PORT || 5000;
 
 app.listen(PORT, () => {
