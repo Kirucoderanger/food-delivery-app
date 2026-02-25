@@ -105,7 +105,7 @@ import userRoutes from "./routes/userRoutes.js";
 import orderRoutes from "./routes/orderRoutes.js";
 import foodRoutes from "./routes/foodRoutes.js";
 import authRoutes from "./routes/authRoutes.js";
-import { uploadHandler } from "./uploadthing.js";
+//import { uploadHandler } from "./uploadthing.js";
 
 // check JWT_SECRET
 if (!process.env.JWT_SECRET || process.env.JWT_SECRET.length < 32) {
@@ -144,7 +144,7 @@ app.use("/api", restaurantRoutes);
 app.use("/api", userRoutes);
 app.use("/api", orderRoutes);
 app.use("/api", foodRoutes);
-app.use("/api/upload", uploadHandler);
+//app.use("/api/upload", uploadHandler);
 
 // uplodthing route
 import { uploadthingHandler } from "./uploadthing.js";
