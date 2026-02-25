@@ -10,7 +10,7 @@ export const uploadRouter = {
   }),
 };
 
-export const uploadHandler = createRouteHandler({
+export const uploadthingHandler = createRouteHandler({
   router: uploadRouter,
 });
 
